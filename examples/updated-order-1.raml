@@ -1,0 +1,40 @@
+#%RAML 1.0 NamedExample
+value: {
+          "id" : 2,
+          "customer": { "id" : 2,
+                        "firstname" : "Dexter",
+                        "lastname" : "Didi",
+                        "address": "123 Street Syndey, NSW, AU",
+                        "lastUpdate": "2017-08-08T10:05:41.090Z",
+                        "version": 1
+                      },
+          "orderLines": [
+                         {"product":  { "code": "002AB",
+                                        "name": "shampoo XYZ",
+                                        "description": "keeps hair clean",
+                                        "price": 3.50,
+                                        "category": "bath",
+                                        "version" : 3,
+                                        "lastUpdate": "2017-08-08T10:05:41.090Z"
+                                      },
+                           "quantity": 12,
+                         "price": 23.25
+                        },
+                         {"product":  { "code": "002AC",
+                                        "name": "detergent XYZ",
+                                        "description": "keeps clothes clean",
+                                        "price": 12.10,
+                                        "category": "home",
+                                        "version" : 3,
+                                        "lastUpdate": "2017-08-08T10:05:41.090Z"
+                                      },
+                           "quantity": 1,
+                         "price": 12.10
+                        }
+                        ],
+          "totalPrice" : 35.35,
+          "date": "2017-08-08T10:05:41.090Z",
+          "lastUpdate": "2017-08-08T10:05:41.090Z",
+          "version": 5
+          
+        }

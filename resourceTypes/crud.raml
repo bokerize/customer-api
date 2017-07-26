@@ -1,0 +1,68 @@
+#%RAML 1.0 ResourceType
+description: get a <<typeName>> with the matching `<<identifier>>`
+uriParameters: 
+  id: 
+    description: the <<typeName>>'s `<<identifier>>`
+get:
+  headers:
+  body:
+    application/json:
+      type: <<typeName>>
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<typeName>>
+    404:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-not-found-for-id.raml
+put:
+  description: Update a <<typeName>> using `<<identifier>>`
+  body:
+    application/json:
+      type: <<typeName>>
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<typeName>>
+    404:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-not-found-for-id.raml
+    409:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-version-conflict.raml
+delete:
+  description: Delete a <<typeName>> using `<<identifier>>`
+  responses:
+    200:
+      description: status OK - delete completed. 
+    202:
+      description: |
+        request accepted - resource is marked for removal (not yet actually deleted).
+    404:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-not-found-for-id.raml
+patch:
+  description: |
+    Update the customer partially. Use this for better for network efficiency.
+  body: 
+    application/json:
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<typeName>>
+    409:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-version-conflict.raml

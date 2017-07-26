@@ -1,0 +1,81 @@
+#%RAML 1.0 Extension
+baseUri: http://ec2-52-201-242-128.compute-1.amazonaws.com/mocks/f3be39ca-82c4-4f5a-8cbc-d84fc8be0955/{version}
+extends: customers-api.raml
+usage: This extension defines additional resources for version 2 of the API.
+version: v2
+types:
+  Product: !include types/Product.raml
+/products:
+  type: { collection: { "typeName": "Product" } }
+  get:
+    is: [cachable: { maxAgeSeconds: 36000 }, paged ]
+    queryParameters:
+      code?:
+        displayName: Product Code
+        type: string
+        example: ABCXY
+      name?:
+        displayName: Product name
+        type: string
+        example: Fork
+      description?:
+        displayName: Product description keyworkds
+        type: string
+        example: Utensil
+    responses:
+      200:
+        headers:
+        body:
+          application/json:
+            example: !include examples/product-arr.raml
+  post:
+    body:
+      application/json:
+        example: !include examples/product-1.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/product-1.raml
+  /{code}:
+    type: 
+      { 
+        crud: { "typeName": "Product", "identifier" : "code"} 
+      }
+    uriParameters: 
+      code: 
+        type: string
+        required: true
+        example: 00ABCD  
+    get:
+      headers:
+      body:
+        application/json:
+          example: !include examples/product-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/product-1.raml 
+    put:
+      securedBy: oauth2
+      body:
+        application/json:
+          example: !include examples/product-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/product-1.raml 
+    delete:
+      securedBy: oauth2
+    patch:
+      securedBy: oauth2
+      body: 
+        application/json:
+          example: !include examples/product-partial-1.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/updated-product-1.raml

@@ -1,0 +1,45 @@
+#%RAML 1.0 ResourceType
+description: A collection of <<resourcePathName|!uppercamelcase>>.
+usage: a list of resource items
+get:
+  description: |
+    List all <<resourcePathName|!uppercamelcase>> matching query criteria, if any; otherwise list all <<resourcePathName|!pluralize|!uppercamelcase>>
+  queryParameters:
+    no-cache?:
+      description: |
+        a no-cache parameter is made available to get in case users want to be assured of a fresh copy of the <<resourcePathName|!uppercamelcase>> data list.
+      displayName: no-cache
+      type: boolean
+      example: true
+    max-result:
+      description: |
+        a max result parameter is made avalable for other systems to better calibrate data consumption. 
+      displayName: max-result
+      type: number
+      example: 50
+        
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<typeName>>[]
+    404:
+      body:
+        application/json:
+          type: !include ../types/Error.raml
+          example: !include ../examples/error-query-no-match.raml
+post:
+  description: |
+    Create a new <<resourcePathName|!uppercamelcase>>.
+  body:
+    application/json:
+      type: <<typeName>>
+  responses:
+    201:
+      body:
+        application/json:
+          type: <<typeName>>
+      
+          
+          
+  

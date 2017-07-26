@@ -1,0 +1,9 @@
+#%RAML 1.0 DataType
+type: object
+description: | 
+  Customer Entry consists of only the user-relevant data such as: firstname, lastname, and optionally address. System should be the one providing id, updateDate, and versions
+properties:
+  firstname: string
+  lastname: string
+  address?: string
+example: {firstname: John, lastname: Stockton, address: "Spokane, Washington"}

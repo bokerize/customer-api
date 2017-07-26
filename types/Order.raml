@@ -1,0 +1,16 @@
+#%RAML 1.0 DataType
+type: !include VersionedObject.raml
+description: | 
+  Order, by a customer, containing different quantities of products
+properties:
+  id: number
+  customer: !include Customer.raml
+  orderLines: 
+    type: array
+    items: 
+      type: !include OrderLine.raml
+  totalPrice: 
+    type: number
+    minimum: 1
+  date: datetime
+      

@@ -1,0 +1,22 @@
+#%RAML 1.0 Trait
+usage: Apply this to lists that use pagination
+description: use pagination to use the network efficiently and for better result speed for users
+  queryParameters:
+    numPerPage:
+      description: The number of <<resourcePathName|!pluralize>> to return, not to exceed <<itemsPerPage>>
+      type: integer
+      required: false
+      example: 5
+      default: 10      
+    offset:
+      description: Skip over a number of <<resourcePathName|!pluralize>> by specifying an offset value for the query
+      type: integer
+      required: false
+      example: 20
+      default: 0
+    limit:
+      description: Limit the number of <<resourcePathName|!pluralize>> on the response
+      type: integer
+      required: false
+      example: 80
+      default: 10      

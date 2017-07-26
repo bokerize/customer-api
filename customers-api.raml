@@ -1,0 +1,110 @@
+#%RAML 1.0
+title: Tech Challenge - Customers api
+baseUri: http://api.store.com/{version}
+version: v1
+securedBy: [basic_auth] #this api tranasacts sensistive information
+securitySchemes:
+  basic_auth: !include securitySchemes/basic-auth.raml
+  oauth2: !include securitySchemes/oauth2.raml
+traits:
+  secured:
+    usage: Apply this to any method that needs to be secured
+    description: Some requests require authentication.
+    headers:
+      access_token:
+        description: Access Token
+        example: 5757gh76
+        required: true
+  cachable: !include traits/cacheable.raml
+  paged: !include traits/paged.raml
+types:
+  CustomerEntry: !include types/CustomerEntry.raml
+  Customer: !include types/Customer.raml
+  Error: !include types/Error.raml
+resourceTypes:
+  collection: !include resourceTypes/collection.raml
+  crud: !include resourceTypes/crud.raml    
+/customers:
+  type: 
+    { 
+      collection: 
+      { "typeName": "Customer"} 
+    }
+  get: 
+    is: [cachable: { maxAgeSeconds: 36000 }, paged ]
+    queryParameters:
+      name?:
+        description: |
+          allows for a smaller, more specific subset of customers via the first and/or last name
+        displayName: name
+        type: string
+        example: Homer
+      address?:
+        description: |
+          allows query via the customer's address
+        displayName: address
+        type: string
+        example: Springfield
+    #need to add paging / optimization
+    responses: 
+      200:
+        headers: 
+        body:
+          application/json:
+            example: !include examples/customer-arr.raml
+  post: 
+    securedBy: oauth2
+    body:
+      application/json:
+        type: CustomerEntry
+        example: !include examples/customer-entry.raml  
+    responses:
+      201:   
+        body:
+          application/json:
+            example: !include examples/customer-1.raml 
+  /{id}:
+    type: 
+      { 
+        crud: { "typeName": "Customer", "identifier" : "id"} 
+      }
+    uriParameters: 
+      id: 
+        type: number
+        example: 7  
+    get:
+      headers:
+      body:
+        application/json:
+          example: !include examples/customer-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/customer-1.raml 
+    put:
+      securedBy: oauth2
+      body:
+        application/json:
+          example: !include examples/customer-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/customer-1.raml 
+    delete:
+      securedBy: oauth2
+    patch:
+      securedBy: oauth2
+      body: 
+        application/json:
+          example: !include examples/customer-partial-1.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/updated-customer-1.raml
+
+
+
+

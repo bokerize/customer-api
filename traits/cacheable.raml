@@ -1,0 +1,12 @@
+#%RAML 1.0 Trait
+usage: Apply this to any method that needs to implement caching
+description: for efficient use of the network
+headers: 
+  Cache-Control: 
+    description: http cache control
+    type: string
+    example: "public, max-age=<<maxAgeSeconds>>" 
+  ETag: 
+    description: hash for the resource which allows us to see if it has been updated
+    type: string
+    example: "15f0fff99ed5aae4edffdd6496d7131f"

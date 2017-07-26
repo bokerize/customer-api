@@ -1,0 +1,79 @@
+#%RAML 1.0 Extension
+baseUri: http://ec2-52-201-242-128.compute-1.amazonaws.com/mocks/f3be39ca-82c4-4f5a-8cbc-d84fc8be0955/{version}
+extends: customers-api.raml
+usage: This extension defines additional resources for version 3 of the API.
+version: v3
+types:
+  Order: !include types/Order.raml
+  OrderLine: !include types/OrderLine.raml
+/orders:
+  type: { collection: { "typeName": "Order" } }
+  get:
+    is: [cachable: { maxAgeSeconds: 36000 }, paged ]
+    queryParameters:
+      customer?:
+        displayName: |
+          Customer name first or last
+        type: string
+        example: ABCXY
+      productName?:
+        displayName: Product name
+        type: string
+        example: Fork
+    responses:
+      200:
+        headers:
+        body:
+          application/json:
+            example: !include examples/orders-arr.raml
+  post:
+    securedBy: oauth2
+    body:
+      application/json:
+        example: !include examples/order-1.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/order-1.raml
+  /{id}:
+    type: 
+      { 
+        crud: { "typeName": "Order", "identifier" : "id"} 
+      }
+    uriParameters: 
+      id: 
+        type: number
+        example: 1222  
+    get:
+      headers:
+      body:
+        application/json:
+          example: !include examples/order-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/order-1.raml 
+    put:
+      securedBy: oauth2
+      body:
+        application/json:
+          example: !include examples/order-1.raml 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/order-1.raml 
+    delete:
+      securedBy: oauth2
+    patch:
+      securedBy: oauth2
+      body: 
+        application/json:
+          example: !include examples/order-partial-1.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/updated-order-1.raml

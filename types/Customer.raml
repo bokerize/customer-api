@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+type: !include CustomerEntry.raml
+description: | 
+  Customer Entry consists of only the user-relevant data such as: firstname, lastname, and optionally address. System should be the one providing id, updateDate, and versions
+properties:
+  id: number 
+  lastUpdate: datetime
+  version: 
+    type: number
+    minimum: 1

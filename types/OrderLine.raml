@@ -1,0 +1,14 @@
+#%RAML 1.0 DataType
+type: object
+description: | 
+  Items in an order. Typically this would be quantity, product, price. Multiple order lines make up one order
+properties:
+  product: !include Product.raml
+  quantity:
+    type: number
+    minimum: 1
+  price: 
+    type: number
+    minimum: 0
+    
+

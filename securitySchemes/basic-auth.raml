@@ -1,0 +1,18 @@
+#%RAML 1.0 SecurityScheme
+description: Each request would include username/password authentication
+type: Basic Authentication
+describedBy:
+  headers:
+    Authorization:
+      description: Used to send the Base64-encoded "username:password" credentials
+      type: string
+  responses:
+    401:
+      description: |
+        Unauthorized. Invalid username and password
+        combination is invalid, or user has no access to the specified <<resourcePathName|!singularize>> .  
+      body:
+        application/json:
+          type: Error
+          example: !include ../examples/error-not-found-for-id.raml
+          
